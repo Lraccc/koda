@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -11,7 +12,8 @@ import {
   GitPullRequest,
   Target,
 } from 'lucide-react';
-import { interns, issues, reports, performanceData } from '@/lib/mock-data';
+import { interns, issues, reports, performanceData, roleToUserMap } from '@/lib/mock-data';
+import { JoinOrganizationCard } from '@/components/join-organization-card';
 import Link from 'next/link';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -84,6 +86,16 @@ function formatTimestamp(timestamp: string) {
 }
 
 export default function DashboardPage() {
+  const [currentRole, setCurrentRole] = useState<string>('coordinator');
+  const [userOrganizationId, setUserOrganizationId] = useState<string | undefined>();
+
+  useEffect(() => {
+    const role = localStorage.getItem('selectedRole') || 'coordinator';
+    const orgId = localStorage.getItem('userOrganizationId');
+    setCurrentRole(role);
+    setUserOrganizationId(orgId || undefined);
+  }, []);
+
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -109,6 +121,11 @@ export default function DashboardPage() {
         </h1>
         <p className="text-text-muted">{today}</p>
       </div>
+
+      {/* Show Join Organization card for interns without an organization */}
+      {currentRole === 'intern' && (
+        <JoinOrganizationCard currentOrganizationId={userOrganizationId} />
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
