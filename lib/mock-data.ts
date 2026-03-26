@@ -10,6 +10,17 @@ export interface Intern {
   reportStatus: 'pending' | 'submitted' | 'reviewed';
   issuesThisWeek: number;
   role: string;
+  organizationId?: string;
+}
+
+export interface Organization {
+  id: string;
+  name: string;
+  coordinatorId: string;
+  coordinatorName: string;
+  code: string;
+  createdAt: string;
+  interns: string[]; // intern IDs
 }
 
 export interface Issue {
@@ -47,6 +58,7 @@ export interface User {
   status: 'active' | 'pending' | 'inactive';
   joinedAt: string;
   avatarInitials: string;
+  organizationId?: string;
 }
 
 export const interns: Intern[] = [
@@ -62,6 +74,7 @@ export const interns: Intern[] = [
     reportStatus: 'submitted',
     issuesThisWeek: 4,
     role: 'Frontend Intern',
+    organizationId: 'org-1',
   },
   {
     id: '2',
@@ -75,6 +88,7 @@ export const interns: Intern[] = [
     reportStatus: 'pending',
     issuesThisWeek: 3,
     role: 'Backend Intern',
+    organizationId: 'org-1',
   },
   {
     id: '3',
@@ -88,6 +102,7 @@ export const interns: Intern[] = [
     reportStatus: 'reviewed',
     issuesThisWeek: 5,
     role: 'Full-Stack Intern',
+    organizationId: 'org-1',
   },
   {
     id: '4',
@@ -101,6 +116,7 @@ export const interns: Intern[] = [
     reportStatus: 'submitted',
     issuesThisWeek: 2,
     role: 'DevOps Intern',
+    organizationId: 'org-1',
   },
   {
     id: '5',
@@ -114,6 +130,7 @@ export const interns: Intern[] = [
     reportStatus: 'submitted',
     issuesThisWeek: 4,
     role: 'Frontend Intern',
+    organizationId: 'org-1',
   },
   {
     id: '6',
@@ -127,6 +144,7 @@ export const interns: Intern[] = [
     reportStatus: 'pending',
     issuesThisWeek: 1,
     role: 'Backend Intern',
+    organizationId: 'org-1',
   },
   {
     id: '7',
@@ -140,6 +158,7 @@ export const interns: Intern[] = [
     reportStatus: 'reviewed',
     issuesThisWeek: 6,
     role: 'Full-Stack Intern',
+    organizationId: 'org-1',
   },
   {
     id: '8',
@@ -153,6 +172,7 @@ export const interns: Intern[] = [
     reportStatus: 'submitted',
     issuesThisWeek: 3,
     role: 'Frontend Intern',
+    organizationId: 'org-1',
   },
 ];
 
@@ -551,6 +571,19 @@ export const users: User[] = [
   },
 ];
 
+// Organizations managed by coordinators
+export const organizations: Organization[] = [
+  {
+    id: 'org-1',
+    name: 'Metawatt Q1 2024',
+    coordinatorId: 'user-9',
+    coordinatorName: 'Carl Mendoza',
+    code: 'KODA-METAWATT-Q1-2024',
+    createdAt: '2024-01-15',
+    interns: ['1', '2', '3', '4', '5', '6', '7', '8'],
+  },
+];
+
 // Get current user based on selected role (from localStorage or default)
 export const roleToUserMap: Record<string, User> = {
   admin: {
@@ -570,6 +603,7 @@ export const roleToUserMap: Record<string, User> = {
     status: 'active',
     joinedAt: '2023-09-01',
     avatarInitials: 'CM',
+    organizationId: 'org-1',
   },
   'team-lead': {
     id: 'user-10',
