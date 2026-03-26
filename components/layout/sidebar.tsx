@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { currentUser } from '@/lib/mock-data';
+import { useState, useEffect } from 'react';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -27,6 +27,12 @@ const adminNavigation = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const [currentRole, setCurrentRole] = useState<string>('coordinator');
+
+  useEffect(() => {
+    const selectedRole = localStorage.getItem('selectedRole') || 'coordinator';
+    setCurrentRole(selectedRole);
+  }, []);
 
   return (
     <div className="fixed left-0 top-0 h-screen w-60 bg-bg-surface border-r border-border-color flex flex-col">
@@ -44,7 +50,7 @@ export function Sidebar() {
             variant="outline"
             className="text-xs bg-bg-elevated border-accent-primary/30 text-accent-primary"
           >
-            {currentUser.role.toUpperCase()}
+            {currentRole.toUpperCase()}
           </Badge>
         </div>
       </div>
@@ -102,7 +108,13 @@ export function Sidebar() {
       </nav>
 
       <div className="p-4 border-t border-border-color">
-        <button className="flex items-center px-3 py-2.5 text-sm font-medium rounded-md text-text-muted hover:text-text-primary hover:bg-bg-elevated/50 transition-colors w-full">
+        <button 
+          onClick={() => {
+            localStorage.removeItem('selectedRole');
+            window.location.href = '/login';
+          }}
+          className="flex items-center px-3 py-2.5 text-sm font-medium rounded-md text-text-muted hover:text-text-primary hover:bg-bg-elevated/50 transition-colors w-full"
+        >
           <LogOut className="mr-3 h-5 w-5" />
           Logout
         </button>

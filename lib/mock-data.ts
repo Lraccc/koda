@@ -551,14 +551,48 @@ export const users: User[] = [
   },
 ];
 
-export const currentUser = {
-  id: 'user-9',
-  name: 'Carl Mendoza',
-  github: 'carlm',
-  role: 'coordinator' as const,
-  status: 'active' as const,
-  avatarInitials: 'CM',
+// Get current user based on selected role (from localStorage or default)
+export const roleToUserMap: Record<string, User> = {
+  admin: {
+    id: 'user-11',
+    name: 'Michael Torres',
+    github: 'michaelt',
+    role: 'admin',
+    status: 'active',
+    joinedAt: '2023-01-10',
+    avatarInitials: 'MT',
+  },
+  coordinator: {
+    id: 'user-9',
+    name: 'Carl Mendoza',
+    github: 'carlm',
+    role: 'coordinator',
+    status: 'active',
+    joinedAt: '2023-09-01',
+    avatarInitials: 'CM',
+  },
+  'team-lead': {
+    id: 'user-10',
+    name: 'Rachel Green',
+    github: 'rachelg',
+    role: 'team-lead',
+    status: 'active',
+    joinedAt: '2023-06-15',
+    avatarInitials: 'RG',
+  },
+  intern: {
+    id: 'user-1',
+    name: 'Sarah Chen',
+    github: 'sarahchen',
+    role: 'intern',
+    status: 'active',
+    joinedAt: '2024-01-15',
+    avatarInitials: 'SC',
+  },
 };
+
+// Deprecated: Use roleToUserMap instead
+export const currentUser = roleToUserMap.coordinator;
 
 export const performanceData = [
   { week: 'Week 1', score: 82 },
